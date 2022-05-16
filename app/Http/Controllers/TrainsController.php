@@ -8,12 +8,17 @@ use Carbon\Carbon;
 class TrainsController extends Controller
 {
     public function index(){
-        $trains=Trains::where('orarioDiPartenza', '>=' ,Carbon::today())->get();
+        $trainsModel = new Trains();
+        $trains = $trainsModel::orderBy('departureTime', 'asc')->paginate(12);
+        $time=Trains::where('departureTime', '>=' ,Carbon::today())/* ->paginate(15) */->get();
 
-        return view('trains.index',["trains"=>$trains]);
+        return view('trains.index',["trains"=>$trains,"time"=>$time]);
     }
 
     public function show($id){
+        $train = Trains::findOrFail($id);
+
+        return view('trains.show', ['train' => $train]);
     }
 
 }

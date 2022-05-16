@@ -2,18 +2,25 @@
 
 
 @section('main-content')
-@dump($trains)
+<div class="row row-cols-1 row-cols-md-3 g-4 my-3">
 @foreach ($trains as $train)
-    <div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">{{$train->Azienda}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Stazione di partenza: {{$train->StazioneDiPartenza}}</h6>
-        <h6 class="card-subtitle mb-2 text-muted">Stazione di arrivo: {{$train->StazioneDiArrivo}}</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+    <div class="col">
+        <div class="card h-100">
+        <div class="card-body">
+            <h5 class="card-title">
+                Azienda: {{$train->companyName}}
+            </h5>
+            <p class="card-text">Stazione di partenza: {{$train->departureStation}}</p>
+            <p class="card-text">Stazione di arrivo: {{$train->arrivalStation}}</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted"><a href='{{route("trains.show",$train->id)}}' class="btn btn-primary">Vai ai dettagli del treno</a></small>
+        </div>
+        </div>
     </div>
-</div>
 @endforeach
-
+</div>
+<div class="col-12 col-md-6 offset-md-5">
+    {{$trains->links()}}
+</div>
 @endsection
